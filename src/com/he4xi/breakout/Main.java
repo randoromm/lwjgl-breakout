@@ -4,6 +4,9 @@ package com.he4xi.breakout;
 import com.he4xi.breakout.Input.KeyInput;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.opengl.GL;
+import org.lwjgl.opengl.GL11;
+import org.lwjgl.opengl.GLCapabilities;
 
 import static org.lwjgl.glfw.GLFW.*; // Imports every static method from GLFW class. Stuff for window and input.
 import static org.lwjgl.opengl.GL11.*; // Imports all static methods from. OpenGL shit.
@@ -54,6 +57,11 @@ public class Main implements Runnable{
 
         glfwMakeContextCurrent(window);
         glfwShowWindow(window);
+        GL.createCapabilities(); // Let LWJGL know we made context current in this thread. Read javadoc.
+
+        glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+        glEnable(GL_DEPTH_TEST); // Enables specified OpenGL state.
+        System.out.println("OpenGL: " + glGetString(GL_VERSION));
     }
 
     public void run() {
@@ -69,6 +77,7 @@ public class Main implements Runnable{
     }
 
     private void render() {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Clears both.
         glfwSwapBuffers(window);
     }
 
